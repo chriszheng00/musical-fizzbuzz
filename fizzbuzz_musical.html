@@ -42,12 +42,12 @@
               ? "Fizz"
               : "Beat0"
 
-      const pickOffset = time =>
-        time === 0
+      const pickOffset = count =>
+        count === 0
           ? 0
-          : (time - 1) % 15 === 0 || (time - 1) % 5 === 0
+          : (count - 1) % 15 === 0 || (count - 1) % 5 === 0
             ? 1800
-            : (time - 1) % 3 === 0
+            : (count - 1) % 3 === 0
               ? 1200
               : 400
 
@@ -69,13 +69,14 @@
 
       const playSequence = (min, max) =>
         range(min, max).reduce((timeout, count) => {
+          console.log(`Timeout: ${timeout} ms \nCount: ${count}`)
           const sound = pickSound(count)
-          const time = timeout + pickOffset(timeout)
+          const time = timeout + pickOffset(count)
           setTimeout(() => {
             playSound(sound)
             displayOutput(sound)
           }, time)
-          return count
+          return time
         }, 0)
 
       getEl("runBtn").addEventListener("click", () => {
